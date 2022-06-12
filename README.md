@@ -42,6 +42,7 @@ First we'll look at the results when querying the model with the most popular fi
 >	>	WATCH : The Last Stand on Sky Sunday
 >	>	WATCH : The Lost Mystery of Tim Hunt
 >	>	WATCH : The Last Words : a Blog About Love
+
 >	With length of 21:
 >	>	WATCH : The War Years on BBC Wales
 
@@ -57,6 +58,7 @@ First we'll look at the results when querying the model with the most popular fi
 **Tory:**
 >	With length of 14:
 >	>	Tory Oxford English Picture Film of the Week
+
 >	With length of 21:
 >	>	Tory MP Private Party Cambridge won the presidential election for the Sex and City Council
 
@@ -72,16 +74,18 @@ First we'll look at the results when querying the model with the most popular fi
 
 **Diane:**
 >	With length of 14:
->		Diane Lucas : Best of Diane Lucas Christmas Special
+>	>	Diane Lucas : Best of Diane Lucas Christmas Special
+
 >	With length of 21:
->		Diane Watson ( has a Nazi name ) and Constance Watson ( a British daughter )
->		Diane Lewis : Is There Comes Another Man ?
+>	>	Diane Watson ( has a Nazi name ) and Constance Watson ( a British daughter )
+>	>	Diane Lewis : Is There Comes Another Man ?
 
 Next we'll look at the results when querying the model with the most popular first two words.
 
 **Diane Abbott:**
 >	With length of 14:
 >	>	Diane Abbott Meets Nurse
+
 >	With length of 21:
 >	>	Diane Abbott reveals a lesbian and gay female high school student who was from a London hospital was arrested
 >	>	Diane Abbott on The Same Old Column before her death in The Won Or Never
@@ -93,6 +97,7 @@ Next we'll look at the results when querying the model with the most popular fir
 **Tory MP:**
 >	With length of 14:
 >	>	Tory MP Anne Russell Bennett during a BBC attack
+
 >	With length of 21:
 >	>	Tory MP Oliver Biden was an Opposition Member in the Cabinet for Foreign Policy
 
@@ -103,6 +108,7 @@ Next we'll look at the results when querying the model with the most popular fir
 **Claudia Webbe:**
 >	With length of 14:
 >	>	Claudia Webbe Brown Naming
+
 >	With length of 21:
 >	>	Claudia Webbe MP in the Wind Again
 
@@ -114,6 +120,7 @@ Next we'll look at the results when querying the model with the most popular fir
 >	With length of 14:
 >	>	Extinction Rebellion of 2014: a British Army campaign in Europe
 >	>	Extinction Rebellion : The War of the 70 Lives
+
 >	With length of 21:
 >	>	Extinction Rebellion : The Last Rebellion of Rebels by John Hancock MP
 
@@ -122,6 +129,7 @@ Next we'll look at the results when querying the model with the most popular fir
 **Read in Full:**
 >	With length of 14:
 >	>	Read in Full : The Schools Dead School Press Team
+
 >	With length of 21:
 >	>	Read in Full : On the Analysis of Sex Pictures
 
@@ -129,6 +137,7 @@ Next we'll look at the results when querying the model with the most popular fir
 >	With length of 14:
 >	>	Channel 4 News Scandal : The Head Girls Put Me
 >	>	Channel 4 News : The Blair Labour Channel
+
 >	With length of 21:
 >	>	Channel 4 News Channel Channel 4 NEWS Channel 2 Channel 8 TV Channel 12 Channel 6
 
@@ -142,6 +151,7 @@ Next we'll look at the results when querying the model with the most popular fir
 >	>	Good Law Project Israel Scandal Agreement Team Up
 >	>	Good Law Project We Want This Money Now ?
 >	>	Good Law Project America , i Am Gay This Week i say
+
 >	With length of 21:
 >	>	Good Law Project ISRAEL Tax Market : Black and White
 
@@ -153,6 +163,7 @@ Next we'll look at the results when querying the model with the most popular fir
 >	With length of 14:
 >	>	Lib Dem Candidate For Disabled Man ( Face to Face )
 >	>	Lib Dem Candidate , Women in Office Scandal
+
 >	With length of 21:
 >	>	Lib Dem Candidate For Sex ? ( Emma Britons )
 
