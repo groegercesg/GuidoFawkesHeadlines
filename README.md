@@ -12,7 +12,15 @@ In a [previous project](https://github.com/groegercesg/Guido_Fawkes_Analysis), I
 
 ## Process
 
-With this Data, I will be 
+With this Data, I will be performing a very minor amount of pre-processing to transform that data into a Fast AI Dataloader friendly format.
+
+We then use a TextDataLoader to put all our headlines into one big steam, with 30% of the data used for validation.
+
+Next we used the [AWD_LTSM](https://arxiv.org/pdf/1708.02182.pdf) model, which is well suited to generating sentences.
+
+We train the model for 5 epochs, which took about 14 mins on my Laptop!
+
+With this completed, we are about to use the model to predict the end on sentences based on starts. We comb through the data to find the most common first word, first two words and first three words. We then pop these into the model, to generate some sample headlines. To get a prediction from the model, you have
 
 ## Results
 
