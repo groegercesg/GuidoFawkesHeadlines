@@ -17,8 +17,8 @@ def getLinksForArticles():
         page = requests.get(TAG_URL+str(current_page)+"/")
         soup = BeautifulSoup(page.content, "html.parser")
         
-        if current_page > 30:
-            invalid_url = True
+        if ((current_page % (250)) == 0):
+            print("We are on page " + str(current_page) + ".")
         
         if soup.title.string != "Page not found – Guido Fawkes":
             links = soup.find_all("a", {"class": "link--title"})
