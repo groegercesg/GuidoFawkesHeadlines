@@ -60,6 +60,7 @@ def getHeadlinesForArticles(stop_headline = None):
         return page_links
     
 def getContentForArticles(article_links):
+    print("We are now going to gather Article content.")
     for i in range(0, len(article_links)):
         if ((i % int(len(article_links)*0.1)) == 0):
             print("We are on article " + str(i+1) + "out of " + str(len(article_links)) + ".")
@@ -74,9 +75,10 @@ def getContentForArticles(article_links):
         article_links[i][1] = title
         article_links[i][2] = datetime.strptime(post_time, '%B %d %Y @ %H:%M')
         
+    print("Overall, we filled in the content for " + str(len(article_links)) + " articles.")
     return article_links
         
-def getLinksForArticles():
+def getLinksForArticles(stop_link = None):
     print("We are starting to gather Article links.")
     
     TAG_URL = "https://order-order.com/page/"
@@ -93,15 +95,18 @@ def getLinksForArticles():
         
         if soup.title.string != "Page not found – Guido Fawkes":
             links = soup.find_all("a", {"class": "link--title"})
-            for i in range(0, len(links)):
-                if links[i]['href'] not in [a[0] for a in page_links]:
-                    page_links.append([links[i]['href'], "", None])
+            for individual_link in set([a['href'] for a in links]):
+                if individual_link == stop_link:
+                    invalid_url = True
+                    break
+                else:
+                    page_links.append([individual_link, None, None])
                 
             current_page += 1
         else:
             invalid_url = True
             
-    print("Overall, we found " + str(len(page_links)) + " article links")
+    print("Overall, we found " + str(len(page_links)) + " article links.")
     return page_links
 
 # if .pkl doesn't exist, new run, create one
@@ -116,10 +121,10 @@ my_file = Path("headlines.pkl")
 if my_file.is_file():
     # file exists
     original_headlineDetails = pd.read_pickle('headlines.pkl')
-    headline_additions = getHeadlinesForArticles(original_headlineDetails['Headline'][0])
+    link_additions = getLinksForArticles(original_headlineDetails['Link'][0])
     
     # Iterate through Headline additions, to prepare it into array
-    headline_additions_df = pd.DataFrame(headline_additions, columns=['Link', 'Headline', 'Post Time'])
+    headline_additions_df = pd.DataFrame(getContentForArticles(link_additions), columns=['Link', 'Headline', 'Post Time'])
     new_headlineDetails = pd.concat([headline_additions_df, original_headlineDetails], ignore_index=True)
     
     new_headlineDetails.to_pickle('headlines.pkl')
@@ -127,5 +132,5 @@ else:
     # file does not exist
     print("File does not exist, generating a new one!")
     article_links = getLinksForArticles()
-    df = pd.DataFrame(getContentForArticles, columns=['Link', 'Headline', 'Post Time'])
+    df = pd.DataFrame(getContentForArticles(article_links), columns=['Link', 'Headline', 'Post Time'])
     df.to_pickle('headlines.pkl')
