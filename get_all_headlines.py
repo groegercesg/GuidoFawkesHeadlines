@@ -3,6 +3,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
+import time
 
 def getHeadlinesForArticles(stop_headline = None):
     print("We are starting to gather Article headlines and links.")
@@ -67,7 +68,24 @@ def getContentForArticles(article_links):
         
         link = article_links[i][0]
 
-        page = requests.get(link)
+        # max try count
+        trycount = 3  
+        while trycount > 0:
+            try:
+                page = requests.get(link)
+                # success
+                trycount = 0 
+            except ConnectionResetError as ex:
+                if trycount <= 0:
+                    # done retrying
+                    print("Failed to retrieve: " + (link) + "\n" + str(ex))  
+                    exit()
+                else:
+                    # retry
+                    trycount -= 1
+                    # wait 1/2 second then retry
+                    time.sleep(0.5)  
+
         soup = BeautifulSoup(page.content, "html.parser")
 
         title = soup.find("v-card-title", {"class": "red accent-4 white--text d-block"}).text.lstrip().rstrip()
@@ -87,7 +105,25 @@ def getLinksForArticles(stop_link = None):
     page_links= []
     
     while invalid_url is not True:
-        page = requests.get(TAG_URL+str(current_page)+"/")
+        
+        # max try count
+        trycount = 3  
+        while trycount > 0:
+            try:
+                page = requests.get(TAG_URL+str(current_page)+"/")
+                # success
+                trycount = 0 
+            except ConnectionResetError as ex:
+                if trycount <= 0:
+                    # done retrying
+                    print("Failed to retrieve: " + (TAG_URL+str(current_page)+"/") + "\n" + str(ex))  
+                    exit()
+                else:
+                    # retry
+                    trycount -= 1
+                    # wait 1/2 second then retry
+                    time.sleep(0.5)  
+        
         soup = BeautifulSoup(page.content, "html.parser")
         
         if ((current_page % (250)) == 0):
