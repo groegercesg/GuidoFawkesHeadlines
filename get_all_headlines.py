@@ -58,6 +58,51 @@ def getHeadlinesForArticles(stop_headline = None):
     else:
         print("Overall, we found " + str(len(page_links)) + " headlines")
         return page_links
+    
+def getContentForArticles(article_links):
+    for i in range(0, len(article_links)):
+        if ((i % int(len(article_links)*0.1)) == 0):
+            print("We are on article " + str(i+1) + "out of " + str(len(article_links)) + ".")
+        
+        link = article_links[i][0]
+
+        page = requests.get(link)
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        title = soup.find("v-card-title", {"class": "red accent-4 white--text d-block"}).text.lstrip().rstrip()
+        post_time = soup.find("span", {"class": "posted-on blue-grey--text text--darken-4"}).text
+        article_links[i][1] = title
+        article_links[i][2] = datetime.strptime(post_time, '%B %d %Y @ %H:%M')
+        
+    return article_links
+        
+def getLinksForArticles():
+    print("We are starting to gather Article links.")
+    
+    TAG_URL = "https://order-order.com/page/"
+    invalid_url = False
+    current_page = 1
+    page_links= []
+    
+    while invalid_url is not True:
+        page = requests.get(TAG_URL+str(current_page)+"/")
+        soup = BeautifulSoup(page.content, "html.parser")
+        
+        if ((current_page % (250)) == 0):
+            print("We are on page " + str(current_page) + ".")
+        
+        if soup.title.string != "Page not found – Guido Fawkes":
+            links = soup.find_all("a", {"class": "link--title"})
+            for i in range(0, len(links)):
+                if links[i]['href'] not in [a[0] for a in page_links]:
+                    page_links.append([links[i]['href'], "", None])
+                
+            current_page += 1
+        else:
+            invalid_url = True
+            
+    print("Overall, we found " + str(len(page_links)) + " article links")
+    return page_links
 
 # if .pkl doesn't exist, new run, create one
     # loop from 1 through to when title is wrong, adding to dataframe
@@ -81,5 +126,6 @@ if my_file.is_file():
 else:
     # file does not exist
     print("File does not exist, generating a new one!")
-    df = pd.DataFrame(getHeadlinesForArticles(), columns=['Link', 'Headline', 'Post Time'])
+    article_links = getLinksForArticles()
+    df = pd.DataFrame(getContentForArticles, columns=['Link', 'Headline', 'Post Time'])
     df.to_pickle('headlines.pkl')
