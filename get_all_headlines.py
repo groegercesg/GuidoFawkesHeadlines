@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
 
-def getLinksForArticles():
+def getHeadlinesForArticles(stop_headline = None):
     print("We are starting to gather Article headlines and links.")
     # Website for episodes     
     TAG_URL = "https://order-order.com/page/"
@@ -12,6 +12,7 @@ def getLinksForArticles():
     current_page = 1
     num_added=0
     page_links= []
+    adding_complete = False
     
     while invalid_url is not True:
         page = requests.get(TAG_URL+str(current_page)+"/")
@@ -30,18 +31,33 @@ def getLinksForArticles():
                 text_clean = links[i].text.lstrip().rstrip().replace('\n', ' ')
                 if text_clean != None and text_clean != "\n" and text_clean != "" and text_clean.split()[0] != "mdi-timer":
                     page_links[num_added][1] = text_clean
+                    adding_complete = False
                 if len(text_clean.split()) > 1:
                     if text_clean.split()[0] == "mdi-timer":
                         date = datetime.strptime(' '.join(text_clean.split()[1:6]), '%d %B %Y @ %H:%M')
                         page_links[num_added][2] = date
                         num_added += 1
+                        adding_complete = True
+                if adding_complete == True and page_links[num_added-1][1] == stop_headline:
+                    invalid_url = True
+                    break
                 
             current_page += 1
         else:
             invalid_url = True
             
-    print("Overall, we found " + str(len(page_links)) + " headlines")
-    return page_links
+    
+    index_of_headline = 0
+    for i in range(0, len(page_links)):
+        if page_links[i][1] == stop_headline:
+            index_of_headline = i
+            
+    if stop_headline != None:
+        print("Overall, we found " + str(len(page_links[:index_of_headline])) + " new headlines")
+        return page_links[:index_of_headline]
+    else:
+        print("Overall, we found " + str(len(page_links)) + " headlines")
+        return page_links
 
 # if .pkl doesn't exist, new run, create one
     # loop from 1 through to when title is wrong, adding to dataframe
@@ -54,9 +70,16 @@ def getLinksForArticles():
 my_file = Path("headlines.pkl")
 if my_file.is_file():
     # file exists
-    print("exists")
+    original_headlineDetails = pd.read_pickle('headlines.pkl')
+    headline_additions = getHeadlinesForArticles(original_headlineDetails['Headline'][0])
+    
+    # Iterate through Headline additions, to prepare it into array
+    headline_additions_df = pd.DataFrame(headline_additions, columns=['Link', 'Headline', 'Post Time'])
+    new_headlineDetails = pd.concat([headline_additions_df, original_headlineDetails], ignore_index=True)
+    
+    new_headlineDetails.to_pickle('headlines.pkl')
 else:
     # file does not exist
     print("File does not exist, generating a new one!")
-    df = pd.DataFrame(getLinksForArticles(), columns=['Link', 'Headline', 'Post Time'])
+    df = pd.DataFrame(getHeadlinesForArticles(), columns=['Link', 'Headline', 'Post Time'])
     df.to_pickle('headlines.pkl')

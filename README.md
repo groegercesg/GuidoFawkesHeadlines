@@ -10,7 +10,7 @@ Guido Fawkes, the _most widely read politics source in Westminster_, is a politi
 
 In a [previous project](https://github.com/groegercesg/Guido_Fawkes_Analysis), I had previously gathered all of Guido Fawkes Saturday Seven-Up posts. These posts typically contain 7 headlines from top stories across the week. This means that I have 3353 headlines from popular Guido Fawkes stories; the popularity point is interesting, it could mean that the headlines were well liked by Guido Fawkes audience and therefore representative of the style of headlines they should be continuing to write.
 
-## Process
+## Initial Process
 
 With this Data, I will be performing a very minor amount of pre-processing to transform that data into a Fast AI Dataloader friendly format.
 
@@ -22,7 +22,11 @@ We train the model for 5 epochs, which took about 14 mins on my Laptop!
 
 With this completed, we are about to use the model to predict the end on sentences based on starts. We comb through the data to find the most common first word, first two words and first three words. We then pop these into the model, to generate some sample headlines. To get a prediction from the model, you have to supply a number of words to predict. We found the average length of a headline, and ask our model to make a couple predictions. We ask it, for each starting string, to generate 3 sample headlines at double the length of the average headline and triple the length of the average headline. From preliminary testing, we found that asking it to generate headlines with just the average length was unreliable and very inconsistent.
 
-## Results
+## Initial Results
+
+<details>
+<summary>Click to expand!</summary>
+
 
 ```
 Throughout these results, it should be noted that I have edited the selected outputs very lightly for clarity and concision.
@@ -175,3 +179,15 @@ Next we'll look at the results when querying the model with the most popular fir
 **High Court Rules:**
 >	With length of 14:
 >	>	High Court Rules against Association of Ireland
+
+</details>
+
+## Final Process
+
+Looking at these results there were clearly some positives in here, however I wasn't sure how representative by data was. So I decided to instead gather all the headlines of all the publicly available Guido Fawkes stories.
+
+I did this using functions, that I have written in the `get_all_headlines.py` file. This file even includes functionality so that it doesn't have to redo the entire website every time, but instead can just simply add the headlines that are new since the last run.
+
+We store the headlines we gather from the site in a dataframe that we can then export to a `.pkl` file. With this Data, we undergo the same machine learning approach that is described above. We also perform the same discovery of most common sentence starts, quering the model with these to give us our final results.
+
+## Final Results
