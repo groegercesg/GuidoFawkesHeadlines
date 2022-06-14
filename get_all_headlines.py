@@ -64,12 +64,12 @@ def getContentForArticles(article_links):
     print("We are now going to gather Article content.")
     for i in range(0, len(article_links)):
         if ((i % int(len(article_links)*0.1)) == 0):
-            print("We are on article " + str(i+1) + "out of " + str(len(article_links)) + ".")
+            print("We are on article " + str(i+1) + " out of " + str(len(article_links)) + ".")
         
         link = article_links[i][0]
 
         # max try count
-        trycount = 3  
+        trycount = 5  
         while trycount > 0:
             try:
                 page = requests.get(link)
@@ -107,7 +107,7 @@ def getLinksForArticles(stop_link = None):
     while invalid_url is not True:
         
         # max try count
-        trycount = 3  
+        trycount = 5  
         while trycount > 0:
             try:
                 page = requests.get(TAG_URL+str(current_page)+"/")
@@ -132,7 +132,7 @@ def getLinksForArticles(stop_link = None):
         if soup.title.string != "Page not found – Guido Fawkes":
             links = soup.find_all("a", {"class": "link--title"})
             for individual_link in set([a['href'] for a in links]):
-                if individual_link == stop_link:
+                if stop_link != None and individual_link == stop_link:
                     invalid_url = True
                     break
                 else:
