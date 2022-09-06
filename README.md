@@ -191,3 +191,5 @@ I did this using functions, that I have written in the `get_all_headlines.py` fi
 We store the headlines we gather from the site in a dataframe that we can then export to a `.pkl` file. With this Data, we undergo the same machine learning approach that is described above. We also perform the same discovery of most common sentence starts, quering the model with these to give us our final results.
 
 ## Final Results
+
+To do!
